@@ -1,0 +1,53 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# ==========================
+# C/C++
+# ==========================
+*.o
+*.a
+*.so
+*.out
+
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+
+# ==========================
+# IDEs
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
+# Logs
+# ==========================
+*.log
+
+# ==========================
+# IA (se manejará aparte)
+# ==========================
+yolo_npu/
+IA_embebidos/
+
+# ==========================
+# Temporales
+# ==========================
+*~
+*.swp
+
+# Datos de pruebas
+gps_data.txt
+rx_gps.csv
+.claude/
+
