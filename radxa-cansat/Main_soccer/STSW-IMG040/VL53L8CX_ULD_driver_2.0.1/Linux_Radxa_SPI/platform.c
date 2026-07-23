@@ -1,4 +1,3 @@
- 
 /**
  * platform.c
  *
@@ -32,8 +31,19 @@
 
 #include <gpiod.h>
 
-/* Debe coincidir con el tamaño usado por el ejemplo STM32 de referencia */
-#define VL53L8CX_COMMS_CHUNK_SIZE 4096
+/* IMPORTANTE: en el ejemplo STM32 de referencia este valor es 4096, pero
+ * ahí no aplica porque HAL_SPI_Transmit/Receive no tienen este límite.
+ * En Linux, el driver spidev limita cada transferencia individual a
+ * "bufsiz" (parámetro de módulo del kernel). Confirmado en la Radxa CM4
+ * con:
+ *   cat /sys/module/spidev/parameters/bufsiz   ->  4096
+ *
+ * En WrMulti, una sola transferencia lleva 2 bytes de dirección + los
+ * datos, así que data_size + 2 debe ser <= bufsiz. Se deja margen (4092
+ * en vez de 4094 exactos) para no rozar el límite justo. Si en otra
+ * plataforma "bufsiz" es distinto, ajusta este valor acorde (verifica
+ * primero con el comando de arriba, no asumas 4096). */
+#define VL53L8CX_COMMS_CHUNK_SIZE 4092
 
 #define SPI_WRITE_MASK(x) (uint16_t)((x) | 0x8000)
 #define SPI_READ_MASK(x)  (uint16_t)((x) & ~0x8000)
